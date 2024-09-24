@@ -1,17 +1,16 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 Arrow arrow1 = new(ArrowHead.obsidian, Fletching.gooseFeathers, 70);
-Console.WriteLine(arrow1.cost);
+Console.WriteLine(arrow1.GetArrowCost());
 
 
 class Arrow
 {
 
-    public ArrowHead arrowHead;
-    public float length;
-    public Fletching fletching;
-
-    public float cost;
+    private ArrowHead arrowHead;
+    private float length;
+    private Fletching fletching;
+    private float cost;
     public Arrow(ArrowHead arrowHead, Fletching fletching, float length)
     {
         this.arrowHead = arrowHead;
@@ -19,6 +18,11 @@ class Arrow
         this.length = length;
         this.cost = CalculatePrice();
     }
+
+    public ArrowHead GetArrowHeadType() => this.arrowHead;
+    public float GetArrowLength() => this.length;
+    public Fletching GetFletchingType() => this.fletching;
+    public float GetArrowCost() => this.cost;
 
     private float CalculatePrice()
     {
