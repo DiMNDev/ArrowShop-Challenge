@@ -1,58 +1,52 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-Arrow arrow1 = new(ArrowHead.obsidian, Fletching.gooseFeathers, 70);
-Console.WriteLine(arrow1.GetArrowCost());
+Arrow ExpensiveArrow = new() { ArrowHead = ArrowHeadTypes.steel, Length = 100, Fletching = FletchingTypes.plastic };
 
+Console.WriteLine($"This Expensive Arrow has an {ExpensiveArrow.ArrowHead} arrow head, {ExpensiveArrow.Fletching} fletching, and is {ExpensiveArrow.Length}cm long.");
+Console.WriteLine($"This Expensive Arrow costs {ExpensiveArrow.Cost}");
 
-class Arrow
+internal class Arrow
 {
-
-    private ArrowHead arrowHead;
-    private float length;
-    private Fletching fletching;
     private float cost;
-    public Arrow(ArrowHead arrowHead, Fletching fletching, float length)
-    {
-        this.arrowHead = arrowHead;
-        this.fletching = fletching;
-        this.length = length;
-        this.cost = CalculatePrice();
-    }
 
-    public ArrowHead GetArrowHeadType() => this.arrowHead;
-    public float GetArrowLength() => this.length;
-    public Fletching GetFletchingType() => this.fletching;
-    public float GetArrowCost() => this.cost;
+    public ArrowHeadTypes ArrowHead { get; init; } = ArrowHeadTypes.wood;
+    public float Length { get; init; } = 60;
+    public FletchingTypes Fletching { get; init; } = FletchingTypes.gooseFeathers;
+    public float Cost
+    {
+        get => cost = CalculatePrice();
+        private set => CalculatePrice();
+    }
 
     private float CalculatePrice()
     {
-        float arrowHeadCost = this.arrowHead switch
+        float arrowHeadCost = ArrowHead switch
         {
-            ArrowHead.wood => 3,
-            ArrowHead.obsidian => 5,
-            ArrowHead.steel => 10
+            ArrowHeadTypes.wood => 3,
+            ArrowHeadTypes.obsidian => 5,
+            ArrowHeadTypes.steel => 10
         };
-        float fletchingCost = this.fletching switch
+        float fletchingCost = Fletching switch
         {
-            Fletching.gooseFeathers => 3,
-            Fletching.turkeyFeathers => 5,
-            Fletching.plastic => 10
+            FletchingTypes.gooseFeathers => 3,
+            FletchingTypes.turkeyFeathers => 5,
+            FletchingTypes.plastic => 10
         };
-        float shaftCost = (float)(this.length * 0.05);
+        float shaftCost = (float)(Length * 0.05);
 
         return arrowHeadCost + fletchingCost + shaftCost;
     }
 
 }
 
-enum ArrowHead
+enum ArrowHeadTypes
 {
     steel,
     wood,
     obsidian
 }
 
-enum Fletching
+enum FletchingTypes
 {
     plastic,
     turkeyFeathers,
